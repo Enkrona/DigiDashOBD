@@ -35,6 +35,8 @@
 
 # Main Method for invoking an OBD Object and detecting sensors
 import obd
+import subprocess
+import time
 
 connection = obd.OBD()  # auto-connects to USB or RF port
 
@@ -78,5 +80,9 @@ def printout_cv(query):
 printout_cv(in_RPM)  # Purely for Debugging ATM to test RPM Changes
 # print(response.value.to("mph"))  # user-friendly unit conversions  #! Throws an error will investigate in later build!
 
-# Very basic for debug runs
-print("End of program")
+# Very simply shuts down the Pi if the RPMs = 0, i.e. car is off & has been 3 secs
+timeout = time.time() + 3
+if in_RPM == 0 & time.time() > timeout:
+    subprocess.call("./shutdown.sh", shell=True)
+    print "Shutting Down Pi"
+
