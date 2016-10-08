@@ -32,10 +32,9 @@
 ########################################################################
 
 
-
 # Main Method for invoking an OBD Object and detecting sensors
 import obd
-import subprocess
+# import subprocess
 import time
 
 connection = obd.OBD()  # auto-connects to USB or RF port
@@ -70,19 +69,26 @@ in_MPG = connection.query(cmd_FUEL_RATE)
 # Handy method to print CURRENT_VALUE (or CV) of the object we feed it -- note you must perform a query before feeding
 
 def printout_cv(query):
-    for i in range(5):  # Prints the first 5 values -- DEBUGGING TOOL
+    for i in range(1):  # Prints the first 5 values -- DEBUGGING TOOL
         print(query.value)
     return
 
 
 # ------------------------------------------------------------------------------------------------------------------- #
-
-printout_cv(in_RPM)  # Purely for Debugging ATM to test RPM Changes
+while in_RPM > 1:
+    printout_cv(in_RPM)  # Purely for Debugging ATM to test RPM Changes
+    printout_cv(in_MPH)
+    printout_cv(in_FUEL_LEVEL)
+    # getting new values to return
+    in_MPH = connection.query(cmd_MPH)  # send the command, and parse the response
+    in_RPM = connection.query(cmd_RPM)
+    in_FUEL_LEVEL = connection.query(cmd_FUEL)
 # print(response.value.to("mph"))  # user-friendly unit conversions  #! Throws an error will investigate in later build!
 
 # Very simply shuts down the Pi if the RPMs = 0, i.e. car is off & has been 3 secs
-timeout = time.time() + 3
+timeout = time.time() + 3.0
+"""
 if in_RPM == 0 & time.time() > timeout:
     subprocess.call("./shutdown.sh", shell=True)
     print "Shutting Down Pi"
-
+    """
