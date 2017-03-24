@@ -37,7 +37,7 @@ import obd
 # import subprocess
 import time
 
-connection = obd.OBD()  # auto-connects to USB or RF port
+connection = obd.OBD()  # auto-connects to USB
 
 # Commands we wish to utilize/query later on
 # Core/Base Info you would want on your dash
@@ -66,7 +66,6 @@ in_OIL_TEMP = connection.query(cmd_OIL_TEMP)
 in_MPG = connection.query(cmd_FUEL_RATE)
 
 
-# print(in_MPH.value.to("mph"))
 # ------------------------------------------------------------------------------------------------------------------- #
 
 # Handy method to print CURRENT_VALUE (or CV) of the object we feed it -- note you must perform a query before feeding
@@ -78,20 +77,22 @@ def printout_cv(query):
 
 # Conversion method from KPH to MPH
 
+
 def kph_to_mph(kph):
     return kph * 0.621371
-
 
 # ------------------------------------------------------------------------------------------------------------------- #
 
 while in_RPM > 1:
     print ""
     print str(in_RPM) + " RPMs"  # Purely for Debugging ATM to test RPM Changes
+    print(in_KPH.value)
+    print("Hrllo valye")
     printout_cv(in_KPH)
     printout_cv(in_FUEL_LEVEL)
     print ""
     # getting new values to return
-    in_MPH = connection.query(cmd_KPH)  # send the command, and parse the response
+    in_KPH = connection.query(cmd_KPH)  # send the command, and parse the response
     in_RPM = connection.query(cmd_RPM)
     in_FUEL_LEVEL = connection.query(cmd_FUEL)
 
