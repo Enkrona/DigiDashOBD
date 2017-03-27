@@ -2,19 +2,19 @@
 
 ########################################################################
 #                                                                      #
-# DigiDashOBD: A python digital dash  module derived from Python-OBD   #
+# DigiDashOBD: A python digital dash  module using Python-OBD          #
 #                                                                      #
 # Copyright 2004 Donour Sizemore (donour@uchicago.edu)                 #
 # Copyright 2009 Secons Ltd. (www.obdtester.com)                       #
 # Copyright 2009 Peter J. Creath                                       #
 # Copyright 2016 Brendan Whitfield (brendan-w.com)                     #
-# Copyright 2016-2017 Bradley Taylor                                   #
+# Copyright 2016-2017 Bradley Taylor (enkrona.net)                     #
 #                                                                      #
 ########################################################################
 #                                                                      #
 # Main.py                                                              #
 #                                                                      #
-# This file implements python-OBD, and probably later other things     #
+# This file implements python-OBD, and KIVY, and later on more...      #
 #                                                                      #
 # DigiDashOBD is free software: you can redistribute it and/or modify  #
 # it under the terms of the GNU General Public License as published by #
@@ -32,10 +32,15 @@
 ########################################################################
 
 
-# Main Method for invoking an OBD Object and detecting sensors
-import obd
+#  Main Method for invoking an OBD Object and detecting sensors
+import time  # This is used to determine and keep track of time on windows
+import obd  # Here we import the "OBD" class for python
+import kivy  # Importing "KIVY" which is the GUI library
+kivy.require('1.9.1')  # Ensuring that the python library is using the latest KIVY.
+from kivy.app import App
+from kivy.uix.label import Label
+
 # import subprocess
-import time
 
 connection = obd.OBD()  # auto-connects to USB
 
@@ -73,6 +78,7 @@ in_MPG = connection.query(cmd_FUEL_RATE)
 def printout_cv(query):
     print str(query)
 
+
 # ------------------------------------------------------------------------------------------------------------------- #
 
 # Conversion method from KPH to MPH
@@ -80,6 +86,7 @@ def printout_cv(query):
 
 def kph_to_mph(kph):
     return kph * 0.621371
+
 
 # ------------------------------------------------------------------------------------------------------------------- #
 
