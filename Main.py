@@ -39,7 +39,7 @@ import kivy  # Importing "KIVY" which is the GUI library
 kivy.require('1.9.1')  # Ensuring that the python library is using the latest KIVY.
 from kivy.app import App
 from kivy.uix.label import Label
-
+ 
 # import subprocess
 
 connection = obd.OBD()  # auto-connects to USB
